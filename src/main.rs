@@ -2,11 +2,11 @@ use std::fs::File;
 use std::io::{self, BufRead};
 use std::path::Path;
 
-fn p1() -> i32 {
+fn p1(line_vec: Vec<String>) -> i32 {
     0
 }
 
-fn p2() -> i32 {
+fn p2(line_vec: Vec<String>) -> i32 {
     0
 }
 
@@ -18,10 +18,12 @@ fn main() {
         for line in lines {
             if let Ok(s) = line {
                 // Process each line...
+                line_vec.push(s);
             }
         }
     }
-    println!("Part 1: {}\nPart 2:{}", p1(), p2());
+    let line_vec2 = line_vec.to_vec();
+    println!("Part 1: {}\nPart 2: {}", p1(line_vec), p2(line_vec2));
 }
 
 // Reusable function to read files
