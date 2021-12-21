@@ -15,11 +15,9 @@ fn main() {
     // let mut str_buf = "".to_owned();
     let mut line_vec: Vec<String> = Vec::new();
     if let Ok(lines) = read_lines(filepath) {
-        for line in lines {
-            if let Ok(s) = line {
-                // Process each line...
-                line_vec.push(s);
-            }
+        for line in lines.flatten() {
+            // Process each line...
+            line_vec.push(line);
         }
     }
     let line_vec2 = line_vec.to_vec();
