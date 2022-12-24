@@ -1,33 +1,35 @@
-use std::fs::File;
-use std::io::{self, BufRead};
-use std::path::Path;
+use std::{env, fs};
 
-fn p1(line_vec: Vec<String>) -> i32 {
+const TEST_FLAG: &str = "--test";
+const INPUT_FILEPATH: &str = "./input.txt";
+const TEST_FILEPATH: &str = "./test.txt";
+
+fn p1(line_vec: &[String]) -> i32 {
     0
 }
 
-fn p2(line_vec: Vec<String>) -> i32 {
+fn p2(line_vec: &[String]) -> i32 {
     0
 }
 
 fn main() {
-    let filepath = "./input.txt";
-    // let mut str_buf = "".to_owned();
+    let filepath = if env::args().any(|x| x == *TEST_FLAG) {
+        TEST_FILEPATH
+    } else {
+        INPUT_FILEPATH
+    };
+    let input = fs::read_to_string(filepath).unwrap();
     let mut line_vec: Vec<String> = Vec::new();
-    if let Ok(lines) = read_lines(filepath) {
-        for line in lines.flatten() {
-            // Process each line...
-            line_vec.push(line);
-        }
-    }
-    let line_vec2 = line_vec.to_vec();
-    println!("Part 1: {}\nPart 2: {}", p1(line_vec), p2(line_vec2));
-}
+    for line in input.lines() {
+        // Process each line...
+        line_vec.push(line.to_string());
 
-// Reusable function to read files
-// From: https://doc.rust-lang.org/stable/rust-by-example/std_misc/file/read_lines.html
-fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
-where P: AsRef<Path>, {
-    let file = File::open(filename)?;
-    Ok(io::BufReader::new(file).lines())
+        // Use the following if only need to process digits
+        // let to_push = line
+        //     .chars()
+        //     .filter(|c| c.is_ascii_digit() || c.is_ascii_whitespace())
+        //     .collect::<String>();
+        // line_vec.push(to_push);
+    }
+    println!("Part 1: {}\nPart 2: {}", p1(&line_vec), p2(&line_vec));
 }
